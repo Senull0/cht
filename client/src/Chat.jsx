@@ -23,7 +23,7 @@ export default function Chat() {
     connectToWs();
   }, [selectedUserId]);
   function connectToWs() {
-    const ws = new WebSocket('ws://localhost:4040');
+    const ws = new WebSocket('ws://https://two34-bndd.onrender.com');
     setWs(ws);
     ws.addEventListener('message', handleMessage);
     ws.addEventListener('close', () => {
@@ -71,6 +71,7 @@ export default function Chat() {
     ws.send(JSON.stringify({ // send to server
       recipient: selectedUserId, 
       text: newMessageText,
+      time: new Date(),
       file,
     }));
     if (file) {
@@ -175,23 +176,24 @@ export default function Chat() {
           </span>
           <button
             onClick={logout}
-            className="text-sm bg-purple-100 py-1 px-2 text-gray-700 border rounded-sm">logout</button>
+            className="text-sm bg-purple-100 hover:bg-red-00 py-1 px-2 text-gray-700 border rounded-sm hover:bg-red-300">logout</button>
         </div>
       </div>
       <div className="flex flex-col bg-purple-50 w-2/3 p-2">
         <div className="flex-grow">
           {!selectedUserId && (
             <div className="flex h-full flex-grow items-center justify-center">
-              <div className="text-gray-300">&larr; Select a person from the sidebar</div>
+              <div className="text-gray-300">&larr; Select a person to chat</div>
             </div>
           )}
           {!!selectedUserId && (
+
             <div className="relative h-full">
               <div className="overflow-y-scroll absolute top-0 left-0 right-0 bottom-2">
                 {messagesWithoutDupes.map(message => (
                   <div key={message._id} className={(message.sender === id ? 'text-right': 'text-left')}>
                     <div className={"text-left inline-block p-2 my-2 rounded-md text-sm " +(message.sender === id ? 'bg-purple-500 text-white':'bg-white text-gray-500')}>
-                      {message.text}
+                      {message.text}{/* time */}
                       {message.file && (
                         <div className="">
                           <a target="_blank" className="flex items-center gap-1 border-b" href={axios.defaults.baseURL + '/uploads/' + message.file}>
@@ -203,6 +205,7 @@ export default function Chat() {
                         </div>
                       )}
                     </div>
+                    <div class = "text-xs text-slate-800/25">{message.time}</div>
                   </div>
                 ))}
                 <div ref={divUnderMessages}></div>
@@ -217,13 +220,13 @@ export default function Chat() {
                    onChange={ev => setNewMessageText(ev.target.value)}
                    placeholder="Type your message here"
                    className="bg-white flex-grow border rounded-sm p-2"/>
-            <label className="bg-purple-200 p-2 text-gray-600 cursor-pointer rounded-sm border border-purple-200">
+            <label className="bg-purple-200 p-2 text-gray-600 cursor-pointer rounded-sm border border-purple-200 hover:bg-purple-300">
               <input type="file" className="hidden" onChange={sendFile} />
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                 <path fillRule="evenodd" d="M18.97 3.659a2.25 2.25 0 00-3.182 0l-10.94 10.94a3.75 3.75 0 105.304 5.303l7.693-7.693a.75.75 0 011.06 1.06l-7.693 7.693a5.25 5.25 0 11-7.424-7.424l10.939-10.94a3.75 3.75 0 115.303 5.304L9.097 18.835l-.008.008-.007.007-.002.002-.003.002A2.25 2.25 0 015.91 15.66l7.81-7.81a.75.75 0 011.061 1.06l-7.81 7.81a.75.75 0 001.054 1.068L18.97 6.84a2.25 2.25 0 000-3.182z" clipRule="evenodd" />
               </svg>
             </label>
-            <button type="submit" className="bg-purple-500 p-2 text-white rounded-sm">
+            <button type="submit" className="bg-purple-500 p-2 text-white rounded-sm hover:bg-purple-800">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
               </svg>

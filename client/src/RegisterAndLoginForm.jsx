@@ -29,16 +29,15 @@ export default function RegisterAndLoginForm() {
                type="password"
                placeholder="password"
                className="block w-full rounded-sm p-2 mb-2 border" />
-        
-        <button className="bg-purple-500 text-white block w-full rounded-sm p-2">
+        <button className="bg-purple-500 hover:bg-purple-800 focus:ring focus:ring-purple-300 text-white block w-full rounded-sm p-2">
           {isLoginOrRegister === 'register' ? 'Register' : 'Login'}
         </button>
-        
+        <img class="object-scale-down h-24 w-36 absolute left-1 top-1" src = "src\assets\chat_log.png" alt="image description"></img>
         <div className="text-center mt-2">
           {isLoginOrRegister === 'register' && (
             <div>
               Already a member?
-              <button className="ml-1" onClick={() => setIsLoginOrRegister('login')}>
+              <button className="ml-1 hover:underline" onClick={() => setIsLoginOrRegister('login')}>
                 Login here
               </button>
             </div>
@@ -46,7 +45,7 @@ export default function RegisterAndLoginForm() {
           {isLoginOrRegister === 'login' && (
             <div>
               Dont have an account?
-              <button className="ml-1" onClick={() => setIsLoginOrRegister('register')}>
+              <button className="ml-1 hover:underline" onClick={() => setIsLoginOrRegister('register')}>
                 Register
               </button>
             </div>
