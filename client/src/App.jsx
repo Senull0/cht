@@ -3,7 +3,7 @@ import {UserContextProvider} from "./UserContext";
 import Routes from "./Routes";
 
 function App() {
-  axios.defaults.baseURL = 'https://two34-bndd.onrender.com';
+  axios.defaults.baseURL = 'http://localhost:4040';
   axios.defaults.withCredentials = true;
   return (
     <UserContextProvider>
